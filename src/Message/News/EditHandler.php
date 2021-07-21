@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Message\News;
 
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Repository\NewsRepository;
 use App\Entity\News;
 
 class EditHandler implements MessageHandlerInterface
 {
-    public function __construct(private NewsRepository $repo, private SluggerInterface $slugger) {}
+    public function __construct(private NewsRepository $repo) {}
 
     public function __invoke(Edit $message)
     {
