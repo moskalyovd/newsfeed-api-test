@@ -37,9 +37,7 @@ class NewsController extends AbstractController
                  
         $this->dispatchMessage($message);
 
-        return new JsonResponse(null, 201, [
-            'Location' => $this->generateUrl('app_news_get', ['id' => 1])
-        ]);
+        return new JsonResponse(null, 201);
     }
 
     #[Route('/news/{id}', methods: ['PUT'], name: 'app_news_edit')]
