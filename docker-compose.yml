@@ -1,0 +1,31 @@
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: ./php-fpm/Dockerfile
+    container_name: newsfeed-app
+    volumes:
+      - ./:/app
+  db:
+    image: mysql
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  webserver:
+    image: "nginx:alpine"
+    container_name: newsfeed-webserver
+    ports:
+      - 80:80
+    volumes_from:
+      - php
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
